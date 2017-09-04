@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <StartupObject>TinyRenderer.Program</StartupObject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ImageSharp" Version="1.0.0-alpha9-00194" />
+    <PackageReference Include="ImageSharp.Drawing" Version="1.0.0-alpha9-00189" />
+    <PackageReference Include="System.ValueTuple" Version="4.4.0" />
+  </ItemGroup>
+
+</Project>
