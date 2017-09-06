@@ -25,7 +25,7 @@ namespace TinyRenderer.Shaders
 
             var normal = vertexInfo.Normal;
             var intensity = normal.Dot(Light);
-            Vector3Extensions.Set(ref _varyingIntensity, vertexIndex, intensity);
+            Vector3Extensions.Set(ref _varyingIntensity, vertexIndex) = intensity;
 
             var vertex = vertexInfo.Vertex.ToVector4();
             return Transform.Multiply(vertex);

@@ -7,22 +7,18 @@ namespace TinyRenderer.Utils
     public static class Vector3Extensions
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void Set(ref Vector3 vector, int index, float value)
+        public static ref float Set(ref Vector3 vector, int index)
         {
-            if (index < 0 || index > 2)
-                throw new ArgumentOutOfRangeException(nameof(index));
-
             switch (index)
             {
                 case 0:
-                    vector.X = value;
-                    break;
+                    return ref vector.X;
                 case 1:
-                    vector.Y = value;
-                    break;
+                    return ref vector.Y;
                 case 2:
-                    vector.Z = value;
-                    break;
+                    return ref vector.Z;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(index));
             }
         }
 
