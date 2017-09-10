@@ -36,13 +36,13 @@ namespace TinyRenderer
 
             //screen.RenderNormalMapShader(zBuffer);
 
-            //screen.RenderSpecularMapShader(zBuffer);
+            screen.RenderSpecularMapShader(zBuffer);
 
             //screen.RenderTangentNormalMapShader(zBuffer);
 
             //screen.RenderShadowShader(zBuffer);
 
-            screen.RenderAmbientOccolusion(zBuffer);
+            //screen.RenderAmbientOccolusion(zBuffer);
 
             //screen.RenderZBuffer(zBuffer, ScreenWidth, ScreenHeight);
 
