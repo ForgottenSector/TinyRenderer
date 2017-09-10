@@ -48,7 +48,7 @@ namespace TinyRenderer.Shaders
                           _varyingNormal[1] * barycentric.Y +
                           _varyingNormal[2] * barycentric.Z).Normalize();
 
-            //https://learnopengl.com/#!Advanced-Lighting/Normal-Mapping
+            // https://learnopengl.com/#!Advanced-Lighting/Normal-Mapping
             var edge1 = _varyingTrinagle[1] - _varyingTrinagle[0];
             var edge2 = _varyingTrinagle[2] - _varyingTrinagle[0];
 

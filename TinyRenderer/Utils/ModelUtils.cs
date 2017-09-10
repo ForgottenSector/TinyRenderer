@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Numerics;
@@ -18,9 +19,9 @@ namespace TinyRenderer.Utils
             '/', ' '
         };
 
-        public static Model LoadModel(string path)
+        public static IReadOnlyCollection<TriangleInfo> LoadModel(string path)
         {
-            var model = new Model();
+            var triangles = new List<TriangleInfo>();
 
             var vertices = new List<Vector3>();
             var normals = new List<Vector3>();
@@ -32,26 +33,26 @@ namespace TinyRenderer.Utils
                 string line;
                 while ((line = reader.ReadLine()) != null)
                 {
-                    var items = line.Replace('.', ',').Split(Separators, StringSplitOptions.RemoveEmptyEntries);
+                    var items = line.Split(Separators, StringSplitOptions.RemoveEmptyEntries);
 
                     switch (items.FirstOrDefault())
                     {
                         case VerticeTag:
                             vertices.Add(new Vector3(
-                                Convert.ToSingle(items[1]),
-                                Convert.ToSingle(items[2]),
-                                Convert.ToSingle(items[3])));
+                                Convert.ToSingle(items[1], CultureInfo.InvariantCulture.NumberFormat),
+                                Convert.ToSingle(items[2], CultureInfo.InvariantCulture.NumberFormat),
+                                Convert.ToSingle(items[3], CultureInfo.InvariantCulture.NumberFormat)));
                             break;
                         case NormalTag:
                             normals.Add(new Vector3(
-                                Convert.ToSingle(items[1]),
-                                Convert.ToSingle(items[2]),
-                                Convert.ToSingle(items[3])));
+                                Convert.ToSingle(items[1], CultureInfo.InvariantCulture.NumberFormat),
+                                Convert.ToSingle(items[2], CultureInfo.InvariantCulture.NumberFormat),
+                                Convert.ToSingle(items[3], CultureInfo.InvariantCulture.NumberFormat)));
                             break;
                         case UVTag:
                             uv.Add(new Vector2(
-                                Convert.ToSingle(items[1]),
-                                Convert.ToSingle(items[2])));
+                                Convert.ToSingle(items[1], CultureInfo.InvariantCulture.NumberFormat),
+                                Convert.ToSingle(items[2], CultureInfo.InvariantCulture.NumberFormat)));
                             break;
                         case TrinagleTag:
                             var triangle = new TriangleInfo(
@@ -69,13 +70,13 @@ namespace TinyRenderer.Utils
                                     normals[Convert.ToInt32(items[9]) - 1])
                             );
 
-                            model.Triangles.Add(triangle);
+                            triangles.Add(triangle);
                             break;
                     }
                 }
             }
 
-            return model;
+            return triangles;
         }
     }
 }

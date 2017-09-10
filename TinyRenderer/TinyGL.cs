@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Numerics;
 using ImageSharp;
 using TinyRenderer.Shaders;
@@ -8,9 +9,10 @@ namespace TinyRenderer
 {
     public static class TinyGL
     {
-        public static Image<Rgba32> Render(this Image<Rgba32> image, Model model, IShader shader, float[,] zBuffer)
+        public static Image<Rgba32> Render(this Image<Rgba32> image, IEnumerable<TriangleInfo> model, IShader shader,
+            float[,] zBuffer)
         {
-            foreach (var triangle in model.Triangles)
+            foreach (var triangle in model)
                 image.TriangleRasterize(
                     shader.Vertex(triangle, 0),
                     shader.Vertex(triangle, 1),
@@ -76,7 +78,8 @@ namespace TinyRenderer
             return image;
         }
 
-        public static Image<Rgba32> GenerateOccolusionMap(this Model model, Matrix4x4 viewPort, int imageWidth,
+        public static Image<Rgba32> GenerateOccolusionMap(this IReadOnlyCollection<TriangleInfo> model,
+            Matrix4x4 viewPort, int imageWidth,
             int imageHeight, int passNumber)
         {
             var screen = new Image<Rgba32>(imageWidth, imageHeight).Fill(Rgba32.Black);
@@ -121,7 +124,7 @@ namespace TinyRenderer
                     var previous = resultOcclusionMap[i, j].R;
                     var current = passOcclusionMap[i, j].R;
 
-                    var color = (byte) ((float) (previous * (pass - 1) + current) / pass + 0.5f);
+                    var color = (byte) ((float) (previous * (pass - 1) + current) / pass + .5f);
                     resultOcclusionMap[i, j] = new Rgba32(color, color, color);
                 }
             }

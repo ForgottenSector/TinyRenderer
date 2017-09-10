@@ -29,7 +29,7 @@ namespace TinyRenderer
                     case 2:
                         return Vertex2;
                     default:
-                        throw new IndexOutOfRangeException("Invalid index.");
+                        throw new ArgumentOutOfRangeException(nameof(index));
                 }
             }
         }

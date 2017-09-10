@@ -13,6 +13,7 @@ namespace TinyRenderer.Utils
             (float) color.G / color.A,
             (float) color.B / color.A);
 
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Rgba32 Add(this Rgba32 color, Rgba32 value)
         {

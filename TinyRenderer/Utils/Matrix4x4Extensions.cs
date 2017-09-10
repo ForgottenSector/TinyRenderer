@@ -6,20 +6,20 @@ namespace TinyRenderer.Utils
     public static class Matrix4x4Extensions
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Matrix4x4 CreateFromColumns(Vector3 row1, Vector3 row2, Vector3 row3) =>
+        public static Matrix4x4 CreateFromColumns(Vector3 column1, Vector3 column2, Vector3 column3) =>
             new Matrix4x4
             {
-                M11 = row1.X,
-                M21 = row1.Y,
-                M31 = row1.Z,
+                M11 = column1.X,
+                M21 = column1.Y,
+                M31 = column1.Z,
 
-                M12 = row2.X,
-                M22 = row2.Y,
-                M32 = row2.Z,
+                M12 = column2.X,
+                M22 = column2.Y,
+                M32 = column2.Z,
 
-                M13 = row3.X,
-                M23 = row3.Y,
-                M33 = row3.Z,
+                M13 = column3.X,
+                M23 = column3.Y,
+                M33 = column3.Z,
 
                 M44 = 1
             };

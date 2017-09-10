@@ -74,12 +74,12 @@ namespace TinyRenderer.Utils
 
             return new Matrix4x4
             {
-                // Сдвигаем в точку x,y
+                // Move to the point x,y
                 M14 = x + width / 2f,
                 M24 = y + height / 2f,
                 M34 = (depthMax + depthMin) / 2f,
 
-                // Маштабируем
+                // Scale
                 M11 = width / 2f,
                 M22 = height / 2f,
                 M33 = (depthMax - depthMin) / 2f,
@@ -89,7 +89,7 @@ namespace TinyRenderer.Utils
 
         public static Matrix4x4 CreateProjection(float r)
         {
-            // r = -1/c, c - расстояние камеры от центра по оси z
+            // r = -1/c, c - camera distance from center in Z-axis
             var projection = Matrix4x4.Identity;
             projection.M43 = r;
             return projection;
@@ -154,6 +154,6 @@ namespace TinyRenderer.Utils
             (float) Random.NextDouble(),
             (float) Random.NextDouble(),
             (float) Random.NextDouble()
-        );
+        ).Normalize();
     }
 }
