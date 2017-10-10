@@ -23,6 +23,7 @@ namespace TinyRenderer.Utils
             return min;
         }
 
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Max(float value1, float value2, float value3)
         {
@@ -87,6 +88,7 @@ namespace TinyRenderer.Utils
             };
         }
 
+
         public static Matrix4x4 CreateProjection(float r)
         {
             // r = -1/c, c - camera distance from center in Z-axis
@@ -94,6 +96,7 @@ namespace TinyRenderer.Utils
             projection.M43 = r;
             return projection;
         }
+
 
         public static Matrix4x4 CreateTranslation(Vector3 position)
         {
@@ -105,6 +108,7 @@ namespace TinyRenderer.Utils
 
             return translation;
         }
+
 
         public static Matrix4x4 CreateLookAt(Vector3 cameraPosition, Vector3 cameraTarget, Vector3 cameraUpVector)
         {
@@ -147,6 +151,7 @@ namespace TinyRenderer.Utils
                 (float) Math.Cos(phi)
             );
         }
+
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 RandomUnitVector3() => new Vector3

@@ -1,5 +1,5 @@
 ﻿using System.Numerics;
-using ImageSharp;
+using SixLabors.ImageSharp;
 using TinyRenderer.Utils;
 
 namespace TinyRenderer.Shaders
@@ -15,6 +15,8 @@ namespace TinyRenderer.Shaders
 
         public Image<Rgba32> Texture { get; set; }
 
+
+        #region Implementation of IShader
 
         public Vector4 Vertex(TriangleInfo triangle, int vertexIndex)
         {
@@ -34,6 +36,7 @@ namespace TinyRenderer.Shaders
             return Transform.Multiply(vertex.ToVector4());
         }
 
+
         public bool Fragment((int x, int y, float depth) fragment, Vector3 barycentric, out Rgba32 pixelColor)
         {
             if (_varyingIntensity <= 0)
@@ -51,5 +54,7 @@ namespace TinyRenderer.Shaders
             pixelColor = color.Multiply(_varyingIntensity);
             return true;
         }
+
+        #endregion
     }
 }

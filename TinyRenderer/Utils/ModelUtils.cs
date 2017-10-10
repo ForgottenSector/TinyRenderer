@@ -19,6 +19,7 @@ namespace TinyRenderer.Utils
             '/', ' '
         };
 
+
         public static IReadOnlyCollection<TriangleInfo> LoadModel(string path)
         {
             var triangles = new List<TriangleInfo>();

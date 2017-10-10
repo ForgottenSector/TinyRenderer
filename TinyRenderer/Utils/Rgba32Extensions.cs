@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Numerics;
 using System.Runtime.CompilerServices;
-using ImageSharp;
+using SixLabors.ImageSharp;
 
 namespace TinyRenderer.Utils
 {
@@ -24,6 +24,7 @@ namespace TinyRenderer.Utils
             return color;
         }
 
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Rgba32 Multiply(this Rgba32 color, float value)
         {
@@ -33,6 +34,7 @@ namespace TinyRenderer.Utils
 
             return color;
         }
+
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Rgba32 Multiply(this Rgba32 color, Vector3 value)

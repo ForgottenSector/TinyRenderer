@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
-using ImageSharp;
+using SixLabors.ImageSharp;
 using TinyRenderer.Shaders;
 using TinyRenderer.Utils;
 
@@ -21,6 +21,7 @@ namespace TinyRenderer
 
             return image;
         }
+
 
         public static Image<Rgba32> TriangleRasterize(this Image<Rgba32> image,
             Vector4 a, Vector4 b, Vector4 c, IShader shader, float[,] zBuffer)
@@ -68,6 +69,7 @@ namespace TinyRenderer
             return image;
         }
 
+
         public static Image<Rgba32> RenderZBuffer(this Image<Rgba32> image, float[,] zBuffer,
             int screenWidth, int screenHeight)
         {
@@ -78,13 +80,19 @@ namespace TinyRenderer
             return image;
         }
 
+
         public static Image<Rgba32> GenerateOccolusionMap(this IReadOnlyCollection<TriangleInfo> model,
             Matrix4x4 viewPort, int imageWidth,
             int imageHeight, int passNumber)
         {
-            var screen = new Image<Rgba32>(imageWidth, imageHeight).Fill(Rgba32.Black);
-            var resultOcclusionMap = new Image<Rgba32>(imageWidth, imageHeight).Fill(Rgba32.Black);
-            var passOcclusionMap = new Image<Rgba32>(imageWidth, imageHeight).Fill(Rgba32.Black);
+            var screen = new Image<Rgba32>(imageWidth, imageHeight);
+            screen.Mutate(context => context.Fill(Rgba32.Black));
+
+            var resultOcclusionMap = new Image<Rgba32>(imageWidth, imageHeight);
+            resultOcclusionMap.Mutate(context => context.Fill(Rgba32.Black));
+
+            var passOcclusionMap = new Image<Rgba32>(imageWidth, imageHeight);
+            passOcclusionMap.Mutate(context => context.Fill(Rgba32.Black));
 
             var occlusionBuffer = new float[imageWidth, imageHeight];
             var zBuffer = new float[imageWidth, imageHeight];
@@ -102,7 +110,7 @@ namespace TinyRenderer
             {
                 Array.Clear(occlusionBuffer, 0, imageWidth * imageHeight);
                 Array.Clear(zBuffer, 0, imageWidth * imageHeight);
-                passOcclusionMap.Fill(Rgba32.Black);
+                passOcclusionMap.Mutate(context => context.Fill(Rgba32.Black));
 
                 var cameraPosition = MathUtils.RandomOnUnitSphere();
                 cameraPosition.Y = Math.Abs(cameraPosition.Y);
@@ -132,6 +140,7 @@ namespace TinyRenderer
             return resultOcclusionMap;
         }
 
+
         public static float MaxElevationAngle(float[,] zBuffer, Vector2 position, Vector2 direction,
             int screenWidth, int screenHeight)
         {
@@ -157,13 +166,14 @@ namespace TinyRenderer
             return maxElevationAngle;
         }
 
+
         public static Image<Rgba32> RenderAmbientOccolusion(this Image<Rgba32> image, float[,] zBuffer, int screenWidth,
             int screenHeight)
         {
             const int raysNumber = 8;
             const double rayAngle = 2 * Math.PI / raysNumber;
 
-            image.Fill(Rgba32.Black);
+            image.Mutate(context => context.Fill(Rgba32.Black));
 
             for (var x = 0; x < screenWidth; x++)
             for (var y = 0; y < screenHeight; y++)

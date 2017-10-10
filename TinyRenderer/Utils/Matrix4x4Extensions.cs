@@ -28,6 +28,7 @@ namespace TinyRenderer.Utils
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Matrix4x4 Transpose(this Matrix4x4 matrix) => Matrix4x4.Transpose(matrix);
 
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Matrix4x4 Invert(this Matrix4x4 matrix)
         {
@@ -35,12 +36,14 @@ namespace TinyRenderer.Utils
             return matrix;
         }
 
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector4 Multiply(this Matrix4x4 matrix, Vector4 vector) => new Vector4(
             matrix.M11 * vector.X + matrix.M12 * vector.Y + matrix.M13 * vector.Z + matrix.M14 * vector.W,
             matrix.M21 * vector.X + matrix.M22 * vector.Y + matrix.M23 * vector.Z + matrix.M24 * vector.W,
             matrix.M31 * vector.X + matrix.M32 * vector.Y + matrix.M33 * vector.Z + matrix.M34 * vector.W,
             matrix.M41 * vector.X + matrix.M42 * vector.Y + matrix.M43 * vector.Z + matrix.M44 * vector.W);
+
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 Multiply(this Matrix4x4 matrix, Vector3 vector)

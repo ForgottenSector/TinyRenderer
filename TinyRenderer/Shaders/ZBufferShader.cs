@@ -1,5 +1,5 @@
 ﻿using System.Numerics;
-using ImageSharp;
+using SixLabors.ImageSharp;
 using TinyRenderer.Utils;
 
 namespace TinyRenderer.Shaders
@@ -8,6 +8,8 @@ namespace TinyRenderer.Shaders
     {
         public Matrix4x4 Transform { get; set; }
 
+
+        #region Implementation of IShader
 
         public Vector4 Vertex(TriangleInfo triangle, int vertexIndex)
         {
@@ -24,5 +26,7 @@ namespace TinyRenderer.Shaders
             pixelColor = color.Multiply(fragment.depth);
             return true;
         }
+
+        #endregion
     }
 }

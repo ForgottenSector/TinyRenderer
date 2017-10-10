@@ -26,8 +26,10 @@ namespace TinyRenderer.Utils
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 Normalize(this Vector3 vector) => Vector3.Normalize(vector);
 
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Dot(this Vector3 vector1, Vector3 vector2) => Vector3.Dot(vector1, vector2);
+
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 Cross(this Vector3 vector1, Vector3 vector2) => Vector3.Cross(vector1, vector2);

@@ -1,5 +1,5 @@
 ﻿using System.Numerics;
-using ImageSharp;
+using SixLabors.ImageSharp;
 using TinyRenderer.Utils;
 
 namespace TinyRenderer.Shaders
@@ -19,6 +19,8 @@ namespace TinyRenderer.Shaders
         public Image<Rgba32> NormalMap { get; set; }
 
 
+        #region Implementation of IShader
+
         public Vector4 Vertex(TriangleInfo triangle, int vertexIndex)
         {
             var vertexInfo = triangle[vertexIndex];
@@ -37,6 +39,7 @@ namespace TinyRenderer.Shaders
 
             return vertex;
         }
+
 
         public bool Fragment((int x, int y, float depth) fragment, Vector3 barycentric, out Rgba32 pixelColor)
         {
@@ -74,5 +77,7 @@ namespace TinyRenderer.Shaders
             pixelColor = color.Multiply(diffuse);
             return true;
         }
+
+        #endregion
     }
 }

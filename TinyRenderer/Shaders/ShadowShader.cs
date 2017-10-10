@@ -1,5 +1,5 @@
 ﻿using System.Numerics;
-using ImageSharp;
+using SixLabors.ImageSharp;
 using TinyRenderer.Utils;
 using static System.Math;
 
@@ -28,6 +28,8 @@ namespace TinyRenderer.Shaders
         public Vector3 Specular { get; set; } = new Vector3(1.6f, 1.6f, 1.6f);
 
 
+        #region Implementation of IShader
+
         public Vector4 Vertex(TriangleInfo triangle, int vertexIndex)
         {
             var vertexInfo = triangle[vertexIndex];
@@ -42,6 +44,7 @@ namespace TinyRenderer.Shaders
 
             return vertex;
         }
+
 
         public bool Fragment((int x, int y, float depth) fragment, Vector3 barycentric, out Rgba32 pixelColor)
         {
@@ -74,5 +77,7 @@ namespace TinyRenderer.Shaders
             pixelColor = color.Multiply(shadow * Diffuse * diffuse + Specular * specular).Add(AmbientColor);
             return true;
         }
+
+        #endregion
     }
 }

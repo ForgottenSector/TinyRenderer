@@ -1,8 +1,7 @@
 ﻿using System.IO;
 using System.Numerics;
-using ImageSharp;
-using ImageSharp.Formats;
-using ImageSharp.Processing;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Processing;
 using TinyRenderer.Shaders;
 using TinyRenderer.Utils;
 using static TinyRenderer.Utils.MathUtils;
@@ -14,9 +13,11 @@ namespace TinyRenderer
         private const int ScreenWidth = 800;
         private const int ScreenHeight = 800;
 
+
         private static void Main()
         {
-            var screen = new Image<Rgba32>(ScreenWidth, ScreenHeight).Fill(Rgba32.Black);
+            var screen = new Image<Rgba32>(ScreenWidth, ScreenHeight);
+            screen.Mutate(context => context.Fill(Rgba32.Black));
 
             var zBuffer = new float[ScreenWidth, ScreenHeight];
 
@@ -48,11 +49,13 @@ namespace TinyRenderer
 
             using (var output = File.OpenWrite("Render.png"))
             {
-                screen.Flip(FlipType.Vertical).Save(output, new PngEncoder());
+                screen.Mutate(context => context.Flip(FlipType.Vertical));
+                screen.SaveAsPng(output);
             }
 
             //GenerateOccolusionMap();
         }
+
 
         private static void RenderFlatShader(this Image<Rgba32> screen, float[,] zBuffer)
         {
@@ -68,6 +71,7 @@ namespace TinyRenderer
             var model = ModelUtils.LoadModel(@"Resources\Head\Model.obj");
             screen.Render(model, shader, zBuffer);
         }
+
 
         private static void RenderFlatTexturedShader(this Image<Rgba32> screen, float[,] zBuffer)
         {
@@ -88,6 +92,7 @@ namespace TinyRenderer
             screen.Render(model, shader, zBuffer);
         }
 
+
         private static void RenderFlatPerspectiveShader(this Image<Rgba32> screen, float[,] zBuffer)
         {
             var cameraPosition = new Vector3(0, 0, 3);
@@ -105,6 +110,7 @@ namespace TinyRenderer
             var model = ModelUtils.LoadModel(@"Resources\Head\Model.obj");
             screen.Render(model, shader, zBuffer);
         }
+
 
         private static void RenderZBufferShader(this Image<Rgba32> screen, float[,] zBuffer)
         {
@@ -128,6 +134,7 @@ namespace TinyRenderer
             screen.Render(model, shader, zBuffer);
         }
 
+
         private static void RenderGouraudShader(this Image<Rgba32> screen, float[,] zBuffer)
         {
             var cameraPosition = new Vector3(1, 1, 3);
@@ -149,6 +156,7 @@ namespace TinyRenderer
             screen.Render(model, shader, zBuffer);
         }
 
+
         private static void GouraudToonShader(this Image<Rgba32> screen, float[,] zBuffer)
         {
             var cameraPosition = new Vector3(1, 1, 3);
@@ -169,6 +177,7 @@ namespace TinyRenderer
             var model = ModelUtils.LoadModel(@"Resources\Head\Model.obj");
             screen.Render(model, shader, zBuffer);
         }
+
 
         private static void RenderGouraudTexturedShader(this Image<Rgba32> screen, float[,] zBuffer)
         {
@@ -194,6 +203,7 @@ namespace TinyRenderer
             var model = ModelUtils.LoadModel(@"Resources\Head\Model.obj");
             screen.Render(model, shader, zBuffer);
         }
+
 
         private static void RenderNormalMapShader(this Image<Rgba32> screen, float[,] zBuffer)
         {
@@ -223,6 +233,7 @@ namespace TinyRenderer
             screen.Render(model, shader, zBuffer);
         }
 
+
         private static void RenderSpecularMapShader(this Image<Rgba32> screen, float[,] zBuffer)
         {
             var cameraPosition = new Vector3(1, 1, 3);
@@ -240,7 +251,8 @@ namespace TinyRenderer
 
             var texture = TextureUtils.LoadTexture(@"Resources\Diablo3\Diffuse.png");
             var normalMap = TextureUtils.LoadTexture(@"Resources\Diablo3\Normal.png");
-            var specularMap = TextureUtils.LoadTexture(@"Resources\Diablo3\Specular.png").Flip(FlipType.Vertical);
+            var specularMap = TextureUtils.LoadTexture(@"Resources\Diablo3\Specular.png");
+            specularMap.Mutate(context => context.Flip(FlipType.Vertical));
 
             var shader = new SpecularMapShader
             {
@@ -257,6 +269,7 @@ namespace TinyRenderer
             var model = ModelUtils.LoadModel(@"Resources\Diablo3\Model.obj");
             screen.Render(model, shader, zBuffer);
         }
+
 
         private static void RenderTangentNormalMapShader(this Image<Rgba32> screen, float[,] zBuffer)
         {
@@ -286,6 +299,7 @@ namespace TinyRenderer
             screen.Render(model, shader, zBuffer);
         }
 
+
         private static void RenderShadowShader(this Image<Rgba32> screen, float[,] zBuffer)
         {
             var shadowBuffer = new float[ScreenWidth, ScreenHeight];
@@ -307,7 +321,8 @@ namespace TinyRenderer
             var model = ModelUtils.LoadModel(@"Resources\Diablo3\Model.obj");
             var texture = TextureUtils.LoadTexture(@"Resources\Diablo3\Diffuse.png");
             var normalMap = TextureUtils.LoadTexture(@"Resources\Diablo3\Normal.png");
-            var specularMap = TextureUtils.LoadTexture(@"Resources\Diablo3\Specular.png").Flip(FlipType.Vertical);
+            var specularMap = TextureUtils.LoadTexture(@"Resources\Diablo3\Specular.png");
+            specularMap.Mutate(context => context.Flip(FlipType.Vertical));
 
             IShader shader = new ZBufferShader
             {
@@ -331,9 +346,10 @@ namespace TinyRenderer
                 ShadowBuffer = shadowBuffer
             };
 
-            screen.Fill(Rgba32.Black);
+            screen.Mutate(context => context.Fill(Rgba32.Black));
             screen.Render(model, shader, zBuffer);
         }
+
 
         private static void GenerateOccolusionMap()
         {
@@ -344,9 +360,11 @@ namespace TinyRenderer
 
             using (var output = File.OpenWrite("Occolusion.png"))
             {
-                occlusionMap.Flip(FlipType.Vertical).Save(output, new PngEncoder());
+                occlusionMap.Mutate(context => context.Flip(FlipType.Vertical));
+                occlusionMap.SaveAsPng(output);
             }
         }
+
 
         private static void RenderAmbientOccolusion(this Image<Rgba32> screen, float[,] zBuffer)
         {

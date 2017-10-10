@@ -1,5 +1,5 @@
 ﻿using System.Numerics;
-using ImageSharp;
+using SixLabors.ImageSharp;
 using TinyRenderer.Utils;
 using static System.Math;
 
@@ -17,6 +17,8 @@ namespace TinyRenderer.Shaders
         public float[,] OcclusionBuffer { get; set; }
 
 
+        #region Implementation of IShader
+
         public Vector4 Vertex(TriangleInfo triangle, int vertexIndex)
         {
             var vertexInfo = triangle[vertexIndex];
@@ -27,6 +29,7 @@ namespace TinyRenderer.Shaders
             var vertex = vertexInfo.Vertex.ToVector4();
             return Transform.Multiply(vertex);
         }
+
 
         public bool Fragment((int x, int y, float depth) fragment, Vector3 barycentric, out Rgba32 pixelColor)
         {
@@ -40,5 +43,7 @@ namespace TinyRenderer.Shaders
             pixelColor = Rgba32.Black;
             return true;
         }
+
+        #endregion
     }
 }
